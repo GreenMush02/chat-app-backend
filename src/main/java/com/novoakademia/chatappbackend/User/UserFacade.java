@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.awt.*;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Getter
@@ -25,5 +26,9 @@ public class UserFacade {
 
     public User save(User user) {
         return repository.save(user);
+    }
+
+    public Optional<User> findById(String id) {
+        return repository.findById(id);
     }
 }

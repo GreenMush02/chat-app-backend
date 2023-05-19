@@ -9,6 +9,8 @@ import java.util.Optional;
 @Repository
 public interface ChatGroupRepository extends JpaRepository<ChatGroup, String> {
 
+
+
     Optional<ChatGroup> findById(String userId);
 
     ChatGroup save(ChatGroup entity);

@@ -53,6 +53,15 @@ class UserControllerTest {
     }
 
     @Test
+    void httpGet_returnUserWithGivenId() {
+        String id = facade.save(new User("test1", "test1@gmail.com", "test",  false, false)).getUserId();
+
+        User result = restTemplate.getForObject("http://localhost:" + port + "/users/" + id, User.class);
+
+        assertThat(result).isInstanceOf(User.class);
+        assertThat(result.getUserName()).isEqualTo("test1");
+    }
+    @Test
     void httpPost_returnsSavedUser() {
         String url = "http://localhost:" + port + "/users";
         var taskJsonObject = getJsonObject("test", "test@gmail.com", "test", false, false);
