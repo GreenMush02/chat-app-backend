@@ -24,6 +24,8 @@ public class User {
 
     private String password;
 
+    private String avatarColor;
+
     private boolean isAdmin;
 
     private boolean isBanned;
