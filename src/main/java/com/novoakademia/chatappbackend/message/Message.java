@@ -1,7 +1,7 @@
 package com.novoakademia.chatappbackend.message;
 
 import com.novoakademia.chatappbackend.User.User;
-import com.novoakademia.chatappbackend.chatGroup.ChatGroup;
+import com.novoakademia.chatappbackend.chatgroup.ChatGroup;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

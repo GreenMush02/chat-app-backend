@@ -1,6 +1,5 @@
-package com.novoakademia.chatappbackend.chatGroup;
+package com.novoakademia.chatappbackend.chatgroup;
 
-import com.novoakademia.chatappbackend.User.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,8 +9,9 @@ import java.util.Optional;
 public interface ChatGroupRepository extends JpaRepository<ChatGroup, String> {
 
 
-
-    Optional<ChatGroup> findById(String userId);
+    Optional<ChatGroup> findById(String chatGroupId);
 
     ChatGroup save(ChatGroup entity);
+
+
 }

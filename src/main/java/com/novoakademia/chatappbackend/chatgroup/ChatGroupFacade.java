@@ -1,15 +1,12 @@
-package com.novoakademia.chatappbackend.chatGroup;
+package com.novoakademia.chatappbackend.chatgroup;
 
-import com.novoakademia.chatappbackend.User.User;
-import com.novoakademia.chatappbackend.User.UserRepository;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
-import java.awt.*;
-import java.sql.Array;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Getter
@@ -28,5 +25,9 @@ public class ChatGroupFacade {
 
     public ChatGroup save(ChatGroup chatGroup) {
         return repository.save(chatGroup);
+    }
+
+    public Optional<ChatGroup> findById(String id) {
+        return repository.findById(id);
     }
 }

@@ -1,11 +1,12 @@
 package com.novoakademia.chatappbackend.User;
 
-import com.novoakademia.chatappbackend.chatGroup.ChatGroup;
+import com.novoakademia.chatappbackend.chatgroup.ChatGroup;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -36,7 +37,7 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "group_id")
     )
-    private List<ChatGroup> chatGroups;
+    private List<ChatGroup> chatGroups = new ArrayList<>();
 
     public User(String userName, String email, String password, boolean isAdmin, boolean isBanned) {
         this.userName = userName;
@@ -45,4 +46,6 @@ public class User {
         this.isAdmin = isAdmin;
         this.isBanned = isBanned;
     }
+
+
 }

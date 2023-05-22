@@ -5,12 +5,10 @@ import com.novoakademia.chatappbackend.User.UserFacade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
+
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.text.html.Option;
 import java.net.URI;
-import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,7 +17,7 @@ import java.util.Optional;
 public class UserController {
     Logger logger = LoggerFactory.getLogger(UserController.class);
 
-    private UserFacade facade;
+    private final UserFacade facade;
 
     public UserController(final UserFacade facade) { this.facade = facade;}
 

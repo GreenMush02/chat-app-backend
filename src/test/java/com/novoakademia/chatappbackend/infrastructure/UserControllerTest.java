@@ -48,8 +48,9 @@ class UserControllerTest {
 
         User[] result = restTemplate.getForObject("http://localhost:" + port + "/users", User[].class);
 
-        assertThat(result).isInstanceOf(User[].class);
-        assertThat(result.length).isEqualTo(initial + 2);
+        assertThat(result)
+                .isInstanceOf(User[].class)
+                .hasSize(initial + 2);
     }
 
     @Test

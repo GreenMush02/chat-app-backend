@@ -1,0 +1,2 @@
+ALTER TABLE chat_groups
+ADD COLUMN is_priv BOOLEAN DEFAULT false;
