@@ -41,19 +41,8 @@ public class MessageFacade {
         return messageRepository.findById(id);
     }
 
-    public MessageDto createMessage(MessageDto messageDto) {
-        String userId = messageDto.getAuthorId();
-        String chatGroupId = messageDto.getChatGroupId();
-
-        User author = userRepository.findById(userId).orElse(null);
-        ChatGroup chatGroup = chatGroupRepository.findById(chatGroupId).orElse(null);
-
-        if (author == null || chatGroup == null) {
-            logger.warn("Błąd w tworzeniu wiadomości!");
-        }
-
-        Message message = new Message(author, LocalDateTime.now(), messageDto.getContent(),  false, chatGroup);
-
+    public MessageDto saveMessage(MessageDto messageDto) {
+        Message message = new Message(messageDto);
         return messageRepository.save(message).dto();
     }
 

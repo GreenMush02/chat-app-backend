@@ -32,7 +32,7 @@ public class ChatGroup {
 
     //fetch = FETCHTYPE.EAGER
     @JsonIgnore
-    @OneToMany(mappedBy = "chatGroup")
+    @OneToMany(mappedBy = "chatGroupId")
     private List<Message> messages = new ArrayList<>();
 
     private boolean isPriv;

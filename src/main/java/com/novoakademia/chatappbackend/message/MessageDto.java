@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class MessageDto {
     private String messageId;
-    private String authorId;
+    private String userId;
     private LocalDateTime time;
     private String content;
     private boolean isDeleted;

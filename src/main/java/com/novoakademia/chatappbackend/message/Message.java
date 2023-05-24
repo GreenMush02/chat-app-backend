@@ -21,36 +21,42 @@ public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String messageId;
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonProperty("authorId")
-    private User author;
+//    @ManyToOne
+//    @JoinColumn(name = "user_id")
+//    @JsonIdentityReference(alwaysAsId = true)
+//    @JsonProperty("authorId")
+//    private User author;
+    private String userId;
     private LocalDateTime time;
     private String content;
     private boolean isDeleted;
-    @ManyToOne
-    @JoinColumn(name = "chat_group_id")
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonProperty("chatGroupId")
-    private ChatGroup chatGroup;
+    private String chatGroupId;
+//    @ManyToOne
+//    @JoinColumn(name = "chat_group_id")
+//    @JsonIdentityReference(alwaysAsId = true)
+//    @JsonProperty("chatGroupId")
+//    private ChatGroup chatGroup;
 
-    public Message(User author, LocalDateTime time, String content, boolean isDeleted, ChatGroup chatGroup) {
-        this.author = author;
-        this.time = time;
-        this.content = content;
-        this.isDeleted = isDeleted;
-        this.chatGroup = chatGroup;
+
+
+
+
+    public Message(MessageDto messageDto) {
+        this.userId = messageDto.getUserId();
+        this.time = messageDto.getTime();
+        this.content = messageDto.getContent();
+        this.isDeleted = messageDto.isDeleted();
+        this.chatGroupId = messageDto.getChatGroupId();
     }
 
     public MessageDto dto() {
         return new MessageDto(
                 this.getMessageId(),
-                this.getAuthor().getUserId(),
+                this.getUserId(),
                 this.getTime(),
                 this.getContent(),
                 this.isDeleted(),
-                this.getChatGroup().getGroupId()
+                this.getChatGroupId()
         );
     }
 }

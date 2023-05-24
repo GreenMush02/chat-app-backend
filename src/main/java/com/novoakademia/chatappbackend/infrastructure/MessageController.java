@@ -49,7 +49,7 @@ public class MessageController {
     @PostMapping
     public ResponseEntity<MessageDto> createMessage(@RequestBody MessageDto messageDto) {
         logger.info("Creating message: " + messageDto.getMessageId());
-        MessageDto result = messageFacade.createMessage(messageDto);
+        MessageDto result = messageFacade.saveMessage(messageDto);
         URI uri = URI.create("/" + result.getMessageId());
         return ResponseEntity.created(uri).body(result);
     }
