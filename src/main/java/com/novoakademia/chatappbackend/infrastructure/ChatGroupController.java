@@ -15,7 +15,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/groups")
 public class ChatGroupController {
-    private Logger logger = LoggerFactory.getLogger(ChatGroupController.class);
+    private final Logger logger = LoggerFactory.getLogger(ChatGroupController.class);
 
     private final ChatGroupFacade facade;
 

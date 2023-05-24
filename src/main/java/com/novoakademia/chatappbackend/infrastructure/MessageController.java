@@ -17,7 +17,7 @@ import java.util.Optional;
 @RequestMapping("/messages")
 public class MessageController {
 
-    private static final Logger logger = LoggerFactory.getLogger(MessageController.class);
+    private final Logger logger = LoggerFactory.getLogger(MessageController.class);
 
     private final MessageFacade messageFacade;
 

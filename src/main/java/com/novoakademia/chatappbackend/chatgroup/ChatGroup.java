@@ -26,9 +26,11 @@ public class ChatGroup {
 
     private String groupName;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "chatGroups")
     private List<User> users = new ArrayList<>();
 
+    //fetch = FETCHTYPE.EAGER
     @JsonIgnore
     @OneToMany(mappedBy = "chatGroup")
     private List<Message> messages = new ArrayList<>();
