@@ -1,6 +1,8 @@
 package com.novoakademia.chatappbackend.chatgroup;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.novoakademia.chatappbackend.User.User;
 import com.novoakademia.chatappbackend.message.Message;
 import jakarta.persistence.*;
@@ -14,6 +16,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "groupId")
 @Entity
 @Table(name = "chat_groups")
 public class ChatGroup {
@@ -23,7 +26,6 @@ public class ChatGroup {
 
     private String groupName;
 
-    @JsonIgnore
     @ManyToMany(mappedBy = "chatGroups")
     private List<User> users = new ArrayList<>();
 

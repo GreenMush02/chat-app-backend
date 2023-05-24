@@ -1,5 +1,7 @@
 package com.novoakademia.chatappbackend.User;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.novoakademia.chatappbackend.chatgroup.ChatGroup;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -12,6 +14,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "userId")
 @Entity
 @Table(name = "users")
 public class User {
@@ -45,6 +48,27 @@ public class User {
         this.password = password;
         this.isAdmin = isAdmin;
         this.isBanned = isBanned;
+    }
+
+    public User(UserDto userDto) {
+        this.userId = userDto.getUserId();
+        this.userName = userDto.getUserName();
+        this.email = userDto.getEmail();
+        this.password = userDto.getPassword();
+        this.avatarColor = userDto.getAvatarColor();
+        this.isAdmin = userDto.isAdmin();
+        this.isBanned = userDto.isBanned();
+    }
+    public UserDto dto() {
+        return new UserDto(
+                this.getUserId(),
+                this.getUserName(),
+                this.getEmail(),
+                this.getPassword(),
+                this.getAvatarColor(),
+                this.isAdmin(),
+                this.isBanned()
+        );
     }
 
 
