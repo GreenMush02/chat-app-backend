@@ -39,6 +39,7 @@ public class MessageController {
         return ResponseEntity.ok(result);
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/group/{id}")
     public ResponseEntity<List<MessageDto>> getMessagesByGroupId(@PathVariable String id) {
         logger.info("Returning messages for group with id: " + id);
