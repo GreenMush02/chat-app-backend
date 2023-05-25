@@ -30,8 +30,8 @@ public class ChatGroup {
     @ManyToMany(mappedBy = "chatGroups")
     private List<User> users = new ArrayList<>();
 
-    //fetch = FETCHTYPE.EAGER
-    @JsonIgnore
+//    //fetch = FETCHTYPE.EAGER
+//    @JsonIgnore
     @OneToMany(mappedBy = "chatGroupId")
     private List<Message> messages = new ArrayList<>();
 

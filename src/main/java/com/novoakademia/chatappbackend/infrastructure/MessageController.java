@@ -39,6 +39,7 @@ public class MessageController {
         return ResponseEntity.ok(result);
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/group/{id}")
     public ResponseEntity<List<MessageDto>> getMessagesByGroupId(@PathVariable String id) {
         logger.info("Returning messages for group with id: " + id);
@@ -46,9 +47,10 @@ public class MessageController {
         return ResponseEntity.ok(messageDtos);
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping
     public ResponseEntity<MessageDto> createMessage(@RequestBody MessageDto messageDto) {
-        logger.info("Creating message: " + messageDto.getMessageId());
+        logger.info("Creating message...");
         MessageDto result = messageFacade.saveMessage(messageDto);
         URI uri = URI.create("/" + result.getMessageId());
         return ResponseEntity.created(uri).body(result);
