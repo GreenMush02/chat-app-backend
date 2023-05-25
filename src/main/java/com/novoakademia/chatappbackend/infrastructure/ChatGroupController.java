@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/groups")
 public class ChatGroupController {
     private final Logger logger = LoggerFactory.getLogger(ChatGroupController.class);
