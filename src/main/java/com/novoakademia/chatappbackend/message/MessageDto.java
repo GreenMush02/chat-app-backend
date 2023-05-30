@@ -21,6 +21,4 @@ public class MessageDto {
     private String content;
     private boolean isDeleted;
     private String chatGroupId;
-
-
 }

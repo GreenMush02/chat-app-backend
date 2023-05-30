@@ -2,13 +2,19 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/chat-app
     username: postgres
-    password: Database123*
+    password: 123
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
       ddl-auto: validate
   flyway:
   baselineOnMigrate: true
-
+  mvc:
+    cors:
+      allowed-origins: http://localhost:3000
+      allowed-methods: GET, POST, PUT, DELETE
+      allowed-headers: Content-Type, Authorization
+      allow-credentials: true
 server:
   port : 8082
+

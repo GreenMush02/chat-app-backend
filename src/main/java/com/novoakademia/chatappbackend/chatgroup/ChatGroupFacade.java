@@ -30,4 +30,9 @@ public class ChatGroupFacade {
     public Optional<ChatGroup> findById(String id) {
         return repository.findById(id);
     }
+
+    public ChatGroupDto createChatGroup(ChatGroupDto chatGroupDto) {
+        ChatGroup chatGroup = new ChatGroup(chatGroupDto);
+        return repository.save(chatGroup).dto();
+    }
 }

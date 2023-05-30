@@ -34,13 +34,10 @@ public class User {
 
     private boolean isBanned;
 
-    @ManyToMany
-    @JoinTable(
-            name = "user_chat_groups",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "group_id")
-    )
-    private List<ChatGroup> chatGroups = new ArrayList<>();
+    @CollectionTable(name = "user_chat_groups", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "group_id")
+    @ElementCollection
+    private List<String> chatGroups = new ArrayList<>();
 
     public User(String userName, String email, String password, boolean isAdmin, boolean isBanned) {
         this.userName = userName;

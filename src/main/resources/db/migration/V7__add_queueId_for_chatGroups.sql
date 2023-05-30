@@ -1,0 +1,2 @@
+ALTER TABLE chat_groups
+ADD COLUMN queue_id VARCHAR(255);

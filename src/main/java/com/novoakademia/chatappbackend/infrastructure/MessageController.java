@@ -1,12 +1,15 @@
 package com.novoakademia.chatappbackend.infrastructure;
 
-import com.novoakademia.chatappbackend.User.User;
 import com.novoakademia.chatappbackend.message.Message;
 import com.novoakademia.chatappbackend.message.MessageDto;
 import com.novoakademia.chatappbackend.message.MessageFacade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -20,6 +23,9 @@ public class MessageController {
     private final Logger logger = LoggerFactory.getLogger(MessageController.class);
 
     private final MessageFacade messageFacade;
+
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
 
     public MessageController(MessageFacade messageFacade) {
         this.messageFacade = messageFacade;
@@ -49,10 +55,14 @@ public class MessageController {
 
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping
-    public ResponseEntity<MessageDto> createMessage(@RequestBody MessageDto messageDto) {
-        logger.info("Creating message...");
+    public ResponseEntity<MessageDto> saveMessage(@RequestBody MessageDto messageDto) {
+        logger.info("Saving message...");
         MessageDto result = messageFacade.saveMessage(messageDto);
         URI uri = URI.create("/" + result.getMessageId());
+
+        messagingTemplate.convertAndSend("/topic/message", result);
+
+
         return ResponseEntity.created(uri).body(result);
     }
 

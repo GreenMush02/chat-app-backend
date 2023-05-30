@@ -1,12 +1,14 @@
 package com.novoakademia.chatappbackend.infrastructure;
 
 import com.novoakademia.chatappbackend.chatgroup.ChatGroup;
+import com.novoakademia.chatappbackend.chatgroup.ChatGroupDto;
 import com.novoakademia.chatappbackend.chatgroup.ChatGroupFacade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,5 +38,15 @@ public class ChatGroupController {
         logger.info("Returning group with id: " + id);
         Optional<ChatGroup> result = facade.findById(id);
         return ResponseEntity.ok(result);
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping
+    public ResponseEntity<ChatGroupDto> createGroup(@RequestBody ChatGroupDto chatGroupDto) {
+        logger.info("Creating group : " + chatGroupDto.getGroupName());
+        ChatGroupDto result = facade.createChatGroup(chatGroupDto);
+        URI uri = URI.create("/" + result.getGroupId());
+
+        return ResponseEntity.created(uri).body(result);
     }
 }
