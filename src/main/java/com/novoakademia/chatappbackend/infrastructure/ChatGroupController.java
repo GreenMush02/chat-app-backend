@@ -3,10 +3,16 @@ package com.novoakademia.chatappbackend.infrastructure;
 import com.novoakademia.chatappbackend.chatgroup.ChatGroup;
 import com.novoakademia.chatappbackend.chatgroup.ChatGroupDto;
 import com.novoakademia.chatappbackend.chatgroup.ChatGroupFacade;
+import com.novoakademia.chatappbackend.message.MessageDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
 import java.util.List;
@@ -20,6 +26,9 @@ public class ChatGroupController {
 
     private final ChatGroupFacade facade;
 
+    @Autowired
+    RestTemplate restTemplate;
+
     public ChatGroupController(final ChatGroupFacade facade) {
         this.facade = facade;
     }
@@ -29,6 +38,19 @@ public class ChatGroupController {
     public ResponseEntity<List<ChatGroup>> getAllGroups() {
         logger.info("Returning all ChatGroups!");
         List<ChatGroup> result = facade.findAll();
+        return ResponseEntity.ok(result);
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping("/queuesConnect")
+    public ResponseEntity<List<String>> connectToUserQueues() {
+        logger.info("Connecting to queues...");
+        List<ChatGroup> groups = facade.findAll();
+        List<String> result = groups.stream().map(chatGroup -> {
+            restTemplate.getForEntity("http://localhost:8080/createListener/" + chatGroup.getQueueId(), String.class);
+            return chatGroup.getQueueId();
+        }).toList();
+
         return ResponseEntity.ok(result);
     }
 

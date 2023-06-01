@@ -8,6 +8,7 @@ import com.novoakademia.chatappbackend.message.MessageFacade;
 import com.novoakademia.chatappbackend.message.MessageRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestTemplate;
 
 @Configuration
 public class ServiceConfiguration {
@@ -24,5 +25,10 @@ public class ServiceConfiguration {
     @Bean
     MessageFacade messageFacade(final MessageRepository messageRepository, final ChatGroupRepository chatGroupRepository, final UserRepository userRepository ) {
         return new MessageFacade(messageRepository, userRepository, chatGroupRepository);
+    }
+
+    @Bean
+    RestTemplate restTemplate() {
+        return new RestTemplate();
     }
 }
