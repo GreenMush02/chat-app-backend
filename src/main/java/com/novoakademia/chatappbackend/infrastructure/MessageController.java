@@ -1,5 +1,6 @@
 package com.novoakademia.chatappbackend.infrastructure;
 
+import com.novoakademia.chatappbackend.User.UserFacade;
 import com.novoakademia.chatappbackend.message.Message;
 import com.novoakademia.chatappbackend.message.MessageDto;
 import com.novoakademia.chatappbackend.message.MessageFacade;
@@ -7,8 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -25,11 +24,14 @@ public class MessageController {
 
     private final MessageFacade messageFacade;
 
+    private final UserFacade userFacade;
+
     @Autowired
     private SimpMessagingTemplate messagingTemplate;
 
-    public MessageController(MessageFacade messageFacade) {
+    public MessageController(MessageFacade messageFacade, UserFacade userFacade) {
         this.messageFacade = messageFacade;
+        this.userFacade = userFacade;
     }
 
     @GetMapping
@@ -37,6 +39,11 @@ public class MessageController {
         logger.info("Returning all messages!");
         List<Message> result = messageFacade.findAll();
         return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/test")
+    public String getUserFacadeString() {
+        return userFacade.toString();
     }
 
     @GetMapping("/{id}")
@@ -55,9 +62,20 @@ public class MessageController {
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
+    @PutMapping("/delete/{id}")
+    public ResponseEntity<MessageDto> deleteMessage(@PathVariable String id) {
+        MessageDto result = messageFacade.deleteMessage(id);
+        logger.info("Delted message with id: " + id);
+        return ResponseEntity.ok(result);
+    }
+
+
+
+
+    @CrossOrigin(origins = "http://localhost:3000")
     @Transactional
     @PostMapping
-    public ResponseEntity<MessageDto> saveMessage(@RequestBody MessageDto messageDto) {
+    public ResponseEntity<MessageDto> saveMessageAndSendViaWebSocket(@RequestBody MessageDto messageDto) {
         logger.info("Saving message...");
         MessageDto result = messageFacade.saveMessage(messageDto);
         URI uri = URI.create("/" + result.getMessageId());

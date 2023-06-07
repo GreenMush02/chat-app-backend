@@ -29,6 +29,7 @@ public class ChatGroupController {
     @Autowired
     RestTemplate restTemplate;
 
+
     public ChatGroupController(final ChatGroupFacade facade) {
         this.facade = facade;
     }
@@ -56,9 +57,9 @@ public class ChatGroupController {
 
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<ChatGroup>> getGroupById(@PathVariable String id) {
+    public ResponseEntity<ChatGroupDto> getGroupById(@PathVariable String id) {
         logger.info("Returning group with id: " + id);
-        Optional<ChatGroup> result = facade.findById(id);
+        ChatGroupDto result = facade.findById(id);
         return ResponseEntity.ok(result);
     }
 

@@ -8,11 +8,14 @@ import com.novoakademia.chatappbackend.message.MessageFacade;
 import com.novoakademia.chatappbackend.message.MessageRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.web.client.RestTemplate;
 
 @Configuration
 public class ServiceConfiguration {
     @Bean
+    @Scope(scopeName = "request", proxyMode = ScopedProxyMode.TARGET_CLASS)
     UserFacade userFacade(final UserRepository userRepository) {
         return new UserFacade(userRepository);
     }
@@ -27,8 +30,4 @@ public class ServiceConfiguration {
         return new MessageFacade(messageRepository, userRepository, chatGroupRepository);
     }
 
-    @Bean
-    RestTemplate restTemplate() {
-        return new RestTemplate();
-    }
 }

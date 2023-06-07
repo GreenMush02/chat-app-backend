@@ -4,9 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.novoakademia.chatappbackend.chatgroup.ChatGroup;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +25,7 @@ public class User {
     private String userId;
 
     private String userName;
-
+    @Email(message = "Invalid email format")
     private String email;
 
     private String password;

@@ -38,4 +38,12 @@ class ChatGroupControllerTest {
                 .isInstanceOf(ChatGroup[].class)
                 .hasSize(initial + 2);
     }
+
+    @Test
+    void httpGet_returnGroupByGivenId () {
+
+        facade.save(new ChatGroup("Test"));
+
+
+    }
 }

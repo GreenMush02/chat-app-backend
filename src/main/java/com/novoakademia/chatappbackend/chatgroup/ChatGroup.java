@@ -12,6 +12,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Data
@@ -45,17 +47,23 @@ public class ChatGroup {
     public ChatGroup(ChatGroupDto chatGroupDto) {
         this.groupName = chatGroupDto.getGroupName();
         this.users = chatGroupDto.getUsers();
-        this.messages = chatGroupDto.getMessages();
+        this.messages = chatGroupDto.getMessages().stream().map(Message::new).toList();
         this.isPriv = chatGroupDto.isPriv();
         this.queueId = "queue." + chatGroupDto.getGroupName();
     }
 
     public ChatGroupDto dto() {
+        List<MessageDto> messageDtos = new ArrayList<>(messages.stream().map(
+                Message::dto
+        ).toList());
+
+        messageDtos.sort(Comparator.comparing(MessageDto::getTime));
+
         return new ChatGroupDto(
                 this.groupId,
                 this.groupName,
                 this.users,
-                this.messages,
+                messageDtos,
                 this.isPriv,
                 this.queueId
         );
