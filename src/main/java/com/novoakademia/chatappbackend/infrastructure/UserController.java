@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +24,9 @@ public class UserController {
     private final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     private final UserFacade facade;
+
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
 
     @Autowired
     public UserController(final UserFacade facade) { this.facade = facade;}
@@ -54,6 +58,9 @@ public class UserController {
         logger.info("Creating user: " + user.getUserName());
         User result = facade.save(user);
         URI uri = URI.create("/" + result.getUserId());
+
+        messagingTemplate.convertAndSend("/topic/user", result);
+
         return ResponseEntity.created(uri).body(result);
 
     }
@@ -63,6 +70,9 @@ public class UserController {
     @PutMapping("/ban/{id}")
     public ResponseEntity<User> banOrUnbanUser(@PathVariable String id) {
         User result = facade.banOrUnbanUser(id);
+
+        messagingTemplate.convertAndSend("/topic/user", result);
+
         if(result.isBanned()) {
             logger.info("Banned " + result.getUserName());
         } else {
